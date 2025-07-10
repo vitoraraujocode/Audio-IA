@@ -8,6 +8,10 @@ import {
 import { fastifyCors } from '@fastify/cors';
 import { env } from './env.ts';
 import { getRoomsRoute } from './HTTP/Routes/getrooms.ts';
+import { createRoomRoute } from './HTTP/Routes/create-room.ts';
+import { getRoomQuestions } from './db/schema/get-room-questions.ts';
+import { createQuestionRoute } from './HTTP/Routes/create-question.ts';
+
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 app.register(fastifyCors, {
   origin: 'http://localhost:5173',
@@ -19,5 +23,8 @@ app.get('/health', () => {
   return 'OK';
 });
 app.register(getRoomsRoute);
+app.register(createRoomRoute)
+app.register(getRoomQuestions)
+app.register(createQuestionRoute)
 
 app.listen({ port: env.PORT });
